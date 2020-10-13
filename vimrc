@@ -1,4 +1,3 @@
-
 " ----------------------
 " For encoding
 " ----------------------
@@ -39,108 +38,111 @@ set encoding=utf-8
 " set termencoding=utf-8
 " set encoding=utf-8
 
-" -------------------
+" -------------------------------------
 " vim base setting
-" -------------------
+" -------------------------------------
+scriptencoding utf-8
 set nocompatible 
+set shortmess+=c                            " 关闭欢迎页面
+
+let mapleader = '\'                         " 全局leader设置
+let maplocalleader = '_'                    " 本地leader设置 这个leader用于那些只对某类文件 （如Python文件、HTML文件）而设置的映射
+nmap <Leader>v :so $MYVIMRC<CR>
 
 set report=0
 set noeb
 set selection=exclusive
 " set selectmode=mouse,key
 
+set complete=
+" 自动补全默认将在以下来源中查找关键字：
+" set complete=.,w,b,u,t,i
+" 在当前缓冲区中进行查找；
+" 在其他窗口中进行查找；
+" 在其他已载入的缓冲区中进行查找；
+" 在没有载入缓冲区的文件中进行查找；
+" 在当前的标签（tags）列表进行查找；
+" 在由当前文件（如#include）包含进来的头文件中进行查找。
+
 filetype indent on
- 
-scriptencoding utf-8
-" key 映射
-let mapleader = '\'                         " 全局leader设置
-let g:mapleader= '\'
-let maplocalleader = '_'                    " 本地leader设置
-nmap <Leader>v :so $MYVIMRC<CR>
-
-
-" ------------------------------------------------
-" For handsome
-" 有点小多，直接拿来用
-" ------------------------------------------------
-set complete-=i                                 " disable scanning included files
-set complete-=t                                 " disable searching tags
-
-" expandtab（是否在缩进和遇到 Tab 键时使用空格替代；使用 noexpandtab 取消设置）；
-" autoindent（自动缩进，即每行的缩进值与上一行相等；使用 noautoindent 取消设置）；
-" cindent（使用 C 语言的缩进方式，根据特殊字符如“{”、“}”、“:”和语句是否结束等信息自动调整缩进；在编辑 C/C++ 等类型文件时会自动设定；使用 nocindent 取消设置）；
 " set cindent
-" cinoptions（C 语言缩进的具体方式，请参考“:help cinoptions-values”）；
-" paste（粘贴模式，会取消所有上述选项的影响来保证后面的操作——通常是从剪贴板粘贴代码——保持原有代码的风格；使用 nopaste 取消设置）。
-set autoindent
-set smartindent
-autocmd FileType php,python,c,java,perl,shell,bash,vim,ruby,cpp,rust set ai et ts=4 sw=4 sts=4
-autocmd FileType javascript,html,css,xml,vue set ai et ts=2 sw=2 sts=2
-autocmd FileType go set ai noet ts=8 sw=8 sts=8
-set smarttab                                    " 根据文件中其他地方的缩进空格个数来确定一个 tab 是多少个空格
-set tabstop=4            " tabstop（制表符的宽度）；
-set shiftwidth=4         " shiftwidth（缩进的空格数）；
-set softtabstop=4        " softtabstop（软制表符宽度，设置为非零数值后使用 Tab 键和 Backspace 时光标移动的格数等于该数值，但实际插入的字符仍受 tabstop 和 expandtab 控制）；
-set wrap
-set whichwrap=b,s,h,l,<,>,[,]                   " 行尾可右移到下行，行首左移到上行,b：退格，s：空格，hl：左右，<>：n/v模式下的左右，[]：i/r模式下的左右
-set wrapmargin=1
+" cinoptions （C 语言缩进的具体方式，请参考“:help cinoptions-values”）；
+" paste （粘贴模式，会取消所有上述选项的影响来保证后面的操作——通常是从剪贴板粘贴代码——保持原有代码的风格；使用 nopaste 取消设置）。
+set autoindent                                  " autoindent （自动缩进，即每行的缩进值与上一行相等；使用 noautoindent 取消设置）；
+set nocindent                                   " cindent （使用 C 语言的缩进方式，根据特殊字符如“{”、“}”、“:”和语句是否结束等信息自动调整缩进；在编辑 C/C++ 等类型文件时会自动设定；使用 nocindent 取消设置）；
+" set smartindent
+set shiftwidth=4                                " 缩进的空格数
 
+" set smarttab                                    " 根据文件中其他地方的缩进空格个数来确定一个 tab 是多少个空格
+set tabstop=4                                   " tabstop（制表符的宽度）；
+set softtabstop=4                               " softtabstop（软制表符宽度，设置为非零数值后使用 Tab 键和 Backspace 时光标移动的格数等于该数值，但实际插入的字符仍受 tabstop 和 expandtab 控制）；
+set expandtab                                   " expandtab （是否在缩进和遇到 Tab 键时使用空格替代；使用 noexpandtab 取消设置）；
+set shiftround
+autocmd FileType php,c,java,perl,shell,bash,vim,ruby,cpp,rust set ai et ts=4 sw=4 sts=4
+autocmd FileType javascript,html,css,xml,vue set ai et ts=4 sw=4 sts=4
+autocmd FileType python,go set ai et ts=4 sw=4 sts=4
 
-set list                                        " 开启对于制表符（tab）、行尾空格符（trail）、行结束符（eol）等等特殊符号的回显
-set listchars=tab:›\ ,trail:•,extends:#,nbsp:.  " 空格等无效字符显示
+""set list                                        " 开启对于制表符（tab）、行尾空格符（trail）、行结束符（eol）等等特殊符号的回显
+""set listchars=tab:›\ ,trail:•,extends:#,nbsp:.  " 空格等无效字符显示
 set backspace=2                                 " 解决插入模式下delete/backspce键失效问题
 set backspace=indent,eol,start                  " 缩进位置”，“行结束符”，“段首”。这样设置可以使得 backspace 键在这三个特殊的位置也能进行回删动作。
-set shiftround
-set cursorline
-set textwidth=80                                " 内容宽度
-set linebreak
-set ruler
 
-" edit
 set nobackup
+set nowritebackup        " 不写入备份文件
 set noswapfile
 set undofile
-set undodir=~/.vim/.undo//                      " 需要mkdir这个目录
-set autochdir
+set undolevels=1000      " use many muchos levels of undo
+set undodir=~/.vim/.undo/                       " 需要mkdir这个目录
 
 set title                       " change the terminal's title
+set cursorline
+" set cursorcolumn                              " 突出显示当前列
+
+set textwidth=80                                " 内容宽度
+set showmatch                   " “设置匹配模式，类似当输入一个左括号时会匹配相应的那个右括号
+
+set wrap
+set linebreak
+"set breakat-=_
+"set nolinebreak                                " 取消自定义折行
+set whichwrap=b,s,h,l,<,>,[,]                   " 行尾可右移到下行，行首左移到上行,b：退格，s：空格，hl：左右，<>：n/v模式下的左右，[]：i/r模式下的左右
+set wrapmargin=1
+set nofoldenable         " 代码折叠
+" set nojoinspaces       " 用J合并两行用一个空格隔开
+set linespace=0          " 行之间没有多余的空格
+
+"set nowrap                                      " 取消自动折行––超出屏幕范围的文本将不会被显示，你需要向句末移动光标，以使屏幕水平滚动，查看一行的完整内容。
+set sidescroll=1                                 " 可以实现更加平滑的逐个字符扩展显示
+set sidescrolloff=15
+set scrolljump=5         " 光标离开屏幕范围
+set scrolloff=8
+
+set laststatus=2         " 总是显示状态行
+set cmdheight=2          " 命令行（在状态行下）的高度，默认为1，这里是2
+set ruler
 set showcmd                     " 在屏幕右下角显示未完成的指令输入
+"set showmode                   " 左下角显示当前 vim 模式
 set wildmenu                    " 自动补全时的文件菜单
 set wildmode=list:longest,full  " 自动补全时，匹配最长子串，列出文件
 
-set showmatch                   " “设置匹配模式，类似当输入一个左括号时会匹配相应的那个右括号
-set smartcase                   " Case insensitive searches become sensitive with capitals
 set number                      " 在当前行显示当前行数
 set relativenumber              " 设置相对显示number instead of 'set nu'
-set norelativenumber              " 设置相对显示number instead of 'set nu'
-
-set ignorecase
-set incsearch            " Incremental search
-set hlsearch             " High light search
-
-set scrolljump=5         " 光标离开屏幕范围
-set scrolloff=8
-set sidescroll=1
-set sidescrolloff=15
-set cmdheight=2          " 命令行（在状态行下）的高度，默认为1，这里是2
-set laststatus=2         " 总是显示状态行
+set norelativenumber
 
 set autoread
 set autowrite            " Automatically save before commands like :next and :make
 set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
 
 set novisualbell         " don't beep
 set noerrorbells         " don't beep
+
 set t_vb=
 set mouse=a              " 启动鼠标所有模式，但是右键功能不可用, 可以保证鼠标滚屏在当前屏幕内
 set mousehide            " 输入文件时隐藏鼠标
 set ttimeout             " 完整的按键码的超时时间
 set ttimeoutlen=100
-
-" 基本配置
-set nowritebackup        " 不写入备份文件
-set shortmess+=c         " 关闭欢迎页面
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
+set updatetime=300
 
 " Better Unix / Windows compatibility
 set viewoptions=folds,options,cursor,unix,slash 
@@ -148,16 +150,10 @@ set virtualedit=onemore  " 光标可以移到当行最后一个字符之后
 set hidden               " 切换文件不保存，隐藏
 " set confirm            " 退出前验证
 " set spell              " 拼写检查
-set linespace=0          " 行之间没有多余的空格
 
-set nowrap               " 取消自动折行
-set nofoldenable         " 代码折叠
-" set nojoinspaces       " 用J合并两行用一个空格隔开
 set splitright           " 用vsplit新建窗口，让新的放右边
 set splitbelow           " 用split新建窗口，让新的放下面
 set pastetoggle=<F12>    " 指定F12进入黏贴模式，可以正常复制缩进
-
-syntax on 
 
 " -----------------------------------------
 " For searching
@@ -165,16 +161,19 @@ syntax on
 set incsearch     " 搜索时自动匹配
 set hlsearch      " 高亮搜索项
 set ignorecase    " 无视大小写
-set smartcase     " 如果有大写就区别大小写匹配
+set smartcase     " Case insensitive searches become sensitive with capitals
 set iskeyword-=.  " 让'.' 作为单词分割符
 set iskeyword-=#  " 让'#' 作为单词分割符
 set iskeyword-=-  " 让'-' 作为单词分割符
-
-"set showmode     " 左下角显示当前 vim 模式
+" ,fc查找冲突的地方uuuu
+map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>       
+" ,ff 查找光标后的单词位置，列出选择项
+nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 filetype off 
 filetype plugin indent off
 
+set autochdir
 " 开启新的buffer时，自动转到对应文件目录
 let g:autochdir = 1
 if exists('g:autochdir')
@@ -207,22 +206,21 @@ map zh zH
 noremap j gj
 noremap k gk
 
-map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>       " ,fc查找冲突的地方uuuu
-" ,ff 查找光标后的单词位置，列出选择项
-nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
 " 使用系统粘贴板替换neovim的unnamepdplus
 if has('clipboard')
-  if has('unnamedplus')  " When possible use + register for copy-paste
-    set clipboard=unnamed,unnamedplus
-  else         " On mac and Windows, use * register for copy-paste
-    set clipboard=unnamed
-  endif
+    if has('unnamedplus')  " When possible use + register for copy-paste
+        set clipboard=unnamed,unnamedplus
+    else         " On mac and Windows, use * register for copy-paste
+        set clipboard=unnamed
+    endif
 endif
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
+" ==== 系统剪切板复制粘贴 ====
+" v 模式下复制内容到系统剪切板
+" vmap <Leader>c "+yy
+" n 模式下复制一行到系统剪切板  
+" nmap <Leader>c "+yy
+" n 模式下粘贴系统剪切板的内容
+" nmap <Leader>v "+p
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -232,7 +230,6 @@ if has("patch-8.1.1564")
 else
 	set signcolumn=yes
 endif
-
 
 " 你在此设置运行时路径 
 " set rtp+=~/.vim/bundle/Vundle.vim 
@@ -275,6 +272,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'mavnn/mintty-colors-solarized'
 Plug 'tomasr/molokai'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
 
 "Plug 'itchyny/lightline.vim'
 "Plug 'powerline/powerline
@@ -283,6 +281,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'mhinz/vim-startify'                   " cowsay and 数字键打开历史文件
 Plug 'Yggdroot/indentLine'                  " 缩进层次性感线条
+Plug 'junegunn/vim-easy-align'
 
 Plug 'kien/rainbow_parentheses.vim'
 
@@ -305,6 +304,7 @@ Plug 'SirVer/ultisnips'                     " 代码片段 配合vim-snippets an
 Plug 'honza/vim-snippets'                   " ctrl+j, ctrl+k, 输入代码片段的关键字后, 使用这两个快捷键前进后退
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'dgryski/vim-godef'
 
 " Plug 'neoclide/coc.nvim', {'branch': 'release'} " 代码补全, 见配置并需要安装各语言依赖, 如coc-python
 " Plug 'pangloss/vim-javascript'
@@ -340,60 +340,6 @@ call plug#end()
 syntax enable 
 filetype plugin indent on
 
-" -----------------
-" color
-" -----------------
-set t_Co=256
-set t_ut=                                   " 防止vim背景颜色错误
-
-" -----------------
-" color theme
-" -----------------
-let g:PaperColor_Theme_Options = {
-	\'theme':{
-	\	'default':{
-	\		'transparent_background':1,
-	\		'override':{},
-	\		'allow_bold':0,
-	\		'allow_italic':0,
-	\	}
-	\},
-	\'language':{
-	\ 	'python':{'highlight_builtins':1},
-	\ 	'cpp':{'highlight_standard_library':1},
-	\ 	'c':{'highlight_builtins':1},
-	\ 	'go':{'highlight_builtins':1},
-	\ 	'sh':{}
-	\}
-\}
-
-autocmd BufEnter *.py set cc=81             " 打开py文件81行高亮
-" 之前的高亮线太难看，重新制定颜色，这里的black和iterm2颜色配置中的black一样
-hi CursorLine   cterm=NONE ctermbg=black guibg=black
-hi CursorColumn   cterm=NONE ctermbg=black guibg=black 
-highlight ColorColumn ctermbg=black guibg=black
-hi LineNr ctermbg=black
-
-set termguicolors
-set background=light
-colorscheme hybrid
-highlight Normal ctermbg=None
-highlight clear SignColumn
-
-" set termguicolors
-" set background=dark
-" colorscheme dracula
-" let g:dracula_italic = 1
-" highlight Normal ctermbg=None
-" highlight clear SignColumn
-
-" set termguicolors
-" set background=dark
-" colorscheme hybrid
-" highlight Normal ctermbg=None
-" highlight clear SignColumn
-" let g:airline_theme='hybrid'
-
 " -----------------------------
 " 文件树设置
 " -----------------------------
@@ -412,8 +358,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeAutoCenter=1
 " let NERDTreeShowLineNumbers=1             " 显示行号
 let NERDTreeShowHidden=1                    " 是否显示隐藏文件
-let NERDTreeWinSize=25                      " 设置宽度
 let NERDTreeShowBookmarks=1                 " 开启Nerdtree时自动显示Bookmarks
+let NERDTreeWinSize=25                      " 设置宽度
 let NERDTreeChDirMode=0
 " let NERDTreeQuitOnOpen=1
 let NERDTreeQuitOnOpen=0
@@ -437,7 +383,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom ={
 			\ 'Ignored'   : '☒',
 			\ "Unknown"   : "?"
 			\ }
-" }}}
 
 " Making it prettier
 let NERDTreeMinimalUI = 1
@@ -454,7 +399,7 @@ let g:syntastic_check_on_open=1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
-let syntastic_loc_list_height = 5
+let g:syntastic_loc_list_height = 5
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 autocmd WinEnter * if &buftype ==#'quickfix' && winnr('$') == 1 | quit |endif
 autocmd WinLeave * lclose
@@ -474,14 +419,12 @@ let g:indent_guides_level = 2
 
 " airline设置"
 let laststatus = 2                                   " 总是显示状态栏
-" let g:airline_theme="dark"                           " 设置主题
-" let g:airline_theme='molokai'
-let g:airline_theme = 'hybrid'  " 主题
-let g:airline_powerline_fonts = 1                    " 使用powerline打过补丁的字体"
-let g:airline#extensions#tabline#enabled = 1         " 开启tabline"   
-let g:airline#extensions#tabline#left_sep = ' '      " tabline中当前buffer两端的分隔字符"
-let g:airline#extensions#tabline#left_alt_sep = '|'  " tabline中未激活buffer两端的分隔字符"     
-let g:airline#extensions#tabline#buffer_nr_show = 1  " tabline中buffer显示编号"
+let g:airline_theme='papercolor'                     " 设置主题
+let g:airline_powerline_fonts = 1                    " 使用powerline打过补丁的字体
+let g:airline#extensions#tabline#enabled = 1         " 开启tabline
+let g:airline#extensions#tabline#left_sep = ' '      " tabline中当前buffer两端的分隔字符
+let g:airline#extensions#tabline#left_alt_sep = '|'  " tabline中未激活buffer两端的分隔字符    
+let g:airline#extensions#tabline#buffer_nr_show = 1  " tabline中buffer显示编号
 let g:airline#extensions#tabline#formatter = 'default'    
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_idx_format = {
@@ -511,7 +454,7 @@ nmap <leader>5 <Plug>AirlineSelectTab5
 nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9>"
+nmap <leader>9 <Plug>AirlineSelectTab9
 " 设置切换tab的快捷键 <\> + <-> 切换到前一个 tab
 nmap <leader>- <Plug>AirlineSelectPrevTab
 " 设置切换tab的快捷键 <\> + <+> 切换到后一个 tab
@@ -607,7 +550,6 @@ hi! SpellCap gui=undercurl guisp=blue
 hi! SpellRare gui=undercurl guisp=magenta
 
 
-
 let g:ale_linters = {
 \   'cpp': ['cppcheck','clang','gcc'],
 \   'c': ['cppcheck','clang', 'gcc'],
@@ -635,47 +577,41 @@ nnoremap <leader>at :ALEToggle<CR>
 nnoremap <leader>af :ALEFix<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-set completeopt=menu,menuone,longest
-" au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif " 自动关闭补全窗口
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif             " 离开插入模式后自动关闭预览窗口
-
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"              " 回车即选中当前项
-" let g:ycm_key_invoke_completion = '<M-/>'                           " 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
-" let g:ycm_key_invoke_completion = '<c-z>'
-
-"上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
-"let g:ycm_key_list_select_completion=['<c-n>']                     " youcompleteme 默认tab s-tab 和自动补全冲突
-"let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>                    " force recomile with syntastic
 "nnoremap <leader>lo :lopen<CR>                                     " open locationlist
 "nnoremap <leader>lc :lclose<CR>                                    " close locationlist
 inoremap <leader><leader> <C-x><C-o>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>                    " force recomile with syntastic
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处 
+""autocmd InsertLeave * if pumvisible() == 0|pclose|endif             " 离开插入模式后自动关闭预览窗口
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif " 自动关闭补全窗口
 
-let g:ycm_python_binary_path='/usr/bin/python3'
-let g:ycm_server_python_interpreter='/usr/bin/python3'
+"let g:ycm_python_binary_path='/usr/bin/python'
+"let g:ycm_server_python_interpreter='/usr/bin/python'
 "let g:clang_use_library=1
-
 ""let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf=1                                      " 不显示开启vim时检查ycm_extra_conf文件的信息  
 
+let g:ycm_confirm_extra_conf=1                                      " 不显示开启vim时检查ycm_extra_conf文件的信息  
 let g:ycm_collect_identifiers_from_tags_files=1                     " 开启基于tag的补全，可以在这之后添加需要的标签路径  
 let g:ycm_collect_identifiers_from_comments_and_strings = 0         " 注释和字符串中的文字也会被收入补全
-let g:ycm_min_num_of_chars_for_completion=2                         "" 输入第2个字符开始补全
+let g:ycm_min_num_of_chars_for_completion=2                         " 输入第2个字符开始补全
 let g:ycm_cache_omnifunc=0                                          " 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_seed_identifiers_with_syntax=1                            " 开启语义补全
 let g:ycm_complete_in_comments = 1                                  " 在注释输入中也能补全
 let g:ycm_complete_in_strings = 1                                   " 在字符串输入中也能补全
+"youcompleteme 默认tab s-tab 和自动补全冲突
+"let g:ycm_key_list_select_completion=['<c-n>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+"上下左右键的行为 会显示其他信息
+inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up> pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"              " 回车即选中当前项
+let g:ycm_key_invoke_completion = '<M-/>'                           " 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
+" let g:ycm_key_invoke_completion = '<c-z>'
 
 let g:ycm_add_preview_to_completeopt = 0
 "let g:ycm_show_diagnostics_ui = 0
@@ -688,10 +624,15 @@ let g:ycm_semantic_triggers =  {
 			\ 'cs,lua,javascript': ['re!\w{2}'],
 			\ }
 " 设置在下面几种格式的文件上屏蔽ycm
-let g:ycm_filetype_blacklist = { 'tagbar' : 1, 'nerdtree' : 1, }
+let g:ycm_filetype_blacklist = {
+			\ 'tagbar' : 1,
+			\ 'nerdtree' : 1,
+			\}
 " let g:ycm_filetype_whitelist = { "c":1, "cpp":1,"objc":1,  "sh":1,  "zsh":1,  "zimbu":1, }}
 
-""set completeopt-=preview
+"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+set completeopt=menu,menuone,longest
+set completeopt-=preview
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrlp 和 Ctrlp-funky(,fu)
 if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
@@ -728,8 +669,6 @@ if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
         nnoremap <Leader>fu :CtrlPFunky<Cr>
     endif
 endif
-
- 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}       "设置要自动配对的符号
@@ -800,8 +739,6 @@ let g:pymode_breakpoint = 0
 let g:pymode_run = 1
 let g:pymode_run_bind = '<Leader>r'
 
-
-
 " ------------------------------------------------
 " For Fastflod
 " ------------------------------------------------
@@ -828,7 +765,6 @@ let g:rust_fold = 1
 let g:php_folding = 1
 let g:python_folding = 1
 
-
 " ------------------------------------------------
 " For Signify see :help Signify
 " ------------------------------------------------
@@ -847,14 +783,40 @@ let g:startify_change_to_dir = 0
 " ------------------------------------------------
 autocmd FileType apache setlocal commentstring=#\ %s
 
-
 " ------------------------------------------------
 " For tagbar
 " 使用 ,tt 打开或者关闭代码函数关键字等预览
 " more see :help tagbar
 " ------------------------------------------------
 nnoremap <leader>tt :TagbarToggle<CR>
-
+let g:tagbar_type_go = {
+                        \ 'ctagstype' : 'go',
+                        \ 'kinds'     : [
+                        \ 'p:package',
+                        \ 'i:imports:1',
+                        \ 'c:constants',
+                        \ 'v:variables',
+                        \ 't:types',
+                        \ 'n:interfaces',
+                        \ 'w:fields',
+                        \ 'e:embedded',
+                        \ 'm:methods',
+                        \ 'r:constructor',
+                        \ 'f:functions'
+                        \ ],
+                        \ 'sro' : '.',
+                        \ 'kind2scope' : {
+                        \ 't' : 'ctype',
+                        \ 'n' : 'ntype'
+                        \ },
+                        \ 'scope2kind' : {
+                        \ 'ctype' : 't',
+                        \ 'ntype' : 'n'
+                        \ },
+                        \ 'ctagsbin'  : 'gotags',
+                        \ 'ctagsargs' : '-sort -silent'
+                        \ }
+                        
 " ------------------------------------------------
 " For dash.vim
 " 使用 ,ds 在Dash中搜索当前光标下的关键字
@@ -881,6 +843,25 @@ let g:bookmark_highlight_lines = 1
 highlight BookmarkSign ctermbg=NONE ctermfg=160
 highlight BookmarkLine ctermbg=194 ctermfg=NONE
 
+" --------------------------------------------------------
+" vim go
+" ---------------------------------------------------------
+let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+
+let g:go_version_warning = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_generate_tags = 1
+
+let g:godef_split=2
+
 " ------------------------------------------------
 " For TaskList.vim
 " 使用 ,tl 快速浏览及跳转TODO, XXX等关键词所在的行
@@ -904,7 +885,6 @@ nmap <leader>tl <Plug>TaskList
 " nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
 " nnoremap <silent> n :call WordNavigation('forward')<cr>
 " nnoremap <silent> N :call WordNavigation('backward')<cr>
-
 
 " ------------------------------------------------
 " For ultisnips and coc-ultisnips and vim-snippets
@@ -1000,4 +980,42 @@ let g:go_version_warning = 0
 " see http://www.skywind.me/blog/archives/2084
 " https://github.com/wsdjeg/vim-galore-zh_cn
 " https://stackoverflow.com/questions/15277241/changing-vim-gutter-color for 'highlight clear SignColumn'
-" ----------------END---------------------------------
+
+
+" -----------------
+" color
+" -----------------
+set t_Co=256
+set t_ut=                                   " 防止vim背景颜色错误
+" 之前的高亮线太难看，重新制定颜色，这里的black和iterm2颜色配置中的black一样
+hi CursorLine   cterm=NONE ctermbg=black guibg=black
+hi CursorColumn   cterm=NONE ctermbg=black guibg=black
+hi LineNr ctermbg=black
+" -----------------
+" theme
+" -----------------
+let g:PaperColor_Theme_Options = {
+    \ 'theme':{
+        \ 'default':{
+            \ 'transparent_background':1,
+            \ 'override':{},
+            \ 'allow_bold':0,
+            \ 'allow_italic':0,
+        \ }
+    \ },
+    \ 'language':{
+        \ 'python':{'highlight_builtins':1},
+        \ 'cpp':{'highlight_standard_library':1},
+        \ 'c':{'highlight_builtins':1},
+        \ 'go':{'highlight_builtins':1},
+        \ 'sh':{}
+    \ }
+\ }
+
+autocmd BufEnter *.py set cc=81             " 打开py文件81行高亮
+
+set termguicolors
+set background=light
+colorscheme one
+highlight Normal ctermbg=None
+highlight clear SignColumn
